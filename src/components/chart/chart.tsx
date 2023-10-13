@@ -36,11 +36,10 @@ const Chart: React.FunctionComponent = () => {
     setSelectedPerson(person);
   };
 
-  const getSelectedOption = (option: {
-    value: keyof Pick<ACMFellow, "hindex" | "citations">;
-    label: string;
-  }) => {
-    setSelectedOption(option.value);
+  const getSelectedOption = (option: { value: string; label: string }) => {
+    setSelectedOption(
+      option.value as keyof Pick<ACMFellow, "hindex" | "citations">
+    );
   };
 
   const handleChange = useCallback((value: any) => {

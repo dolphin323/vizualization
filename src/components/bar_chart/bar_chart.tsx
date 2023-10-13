@@ -25,7 +25,7 @@ const BarChart: React.FC<BarChartProps> = ({ citation_histogram }) => {
     svg.selectAll("*").remove();
     const xScale = d3
       .scaleBand()
-      .domain(years.map((val, i) => val))
+      .domain(years.map((val) => val.toString()))
       .range([0, w])
       .padding(0.5);
 
@@ -62,7 +62,7 @@ const BarChart: React.FC<BarChartProps> = ({ citation_histogram }) => {
       .selectAll(".bar")
       .data(citation_histogram || [])
       .join("rect")
-      .attr("x", (v, i) => xScale(v[0]))
+      .attr("x", (v) => xScale(v[0].toString()) || -1)
       .attr("y", (v, i) => yScale(v[1]))
       .attr("width", xScale.bandwidth())
       .attr("height", (val) => h - yScale(val[1]))
@@ -73,7 +73,7 @@ const BarChart: React.FC<BarChartProps> = ({ citation_histogram }) => {
         return tooltip
           .style("top", event.pageY + 30 + "px")
           .style("left", event.pageX + 20 + "px")
-          .html(d[1]);
+          .html(d[1].toString());
       })
       .on("mouseout", function () {
         return tooltip.style("visibility", "hidden");

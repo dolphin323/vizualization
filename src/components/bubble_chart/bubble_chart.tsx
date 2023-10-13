@@ -68,11 +68,11 @@ const BubbleChart: React.FunctionComponent<IBubbleChartProps> = ({
   }, [bubblesData, selectedOption]);
 
   const radiusScale = (value: d3.NumberValue) => {
-    const fx = (
+    const fx =
       selectedOption === "hindex"
-        ? d3.scaleSqrt().range([1, 60])
-        : d3.scaleLog().range([1, 20])
-    ).domain([minValue, maxValue]);
+        ? d3.scaleSqrt().range([1, 60]).domain([minValue, maxValue])
+        : d3.scaleLog().range([1, 20]).domain([minValue, maxValue]);
+
     return fx(value);
   };
 
@@ -98,7 +98,7 @@ const BubbleChart: React.FunctionComponent<IBubbleChartProps> = ({
           })
       )
       .on("tick", () => {
-        setState({ data });
+        setState({ data: data as never[] });
       });
   };
 
