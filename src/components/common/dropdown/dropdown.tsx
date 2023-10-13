@@ -11,7 +11,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options, onChange }) => {
     <div>
       <Select
         options={options}
-        onChange={onChange}
+        onChange={onChange as any}
         defaultValue={options[0]}
         instanceId={"optionSelect"}
       />
