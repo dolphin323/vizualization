@@ -45,8 +45,8 @@ export const HorizontalBarplot = ({ width, height, data }: BarplotProps) => {
           width={yScale(d.value)}
           height={xScale.bandwidth()}
           opacity={0.9}
-          stroke="#d14d79"
-          fill="#d14d79"
+          stroke="#63d3a1"
+          fill="#63d3a1"
           fillOpacity={0.9}
           strokeWidth={1}
           rx={1}
@@ -57,7 +57,7 @@ export const HorizontalBarplot = ({ width, height, data }: BarplotProps) => {
           textAnchor="end"
           alignmentBaseline="central"
           fontSize={12}
-          stroke="#D3D3D3"
+          //   stroke="#D3D3D3"
           strokeWidth={1}
         >
           {d.value}
@@ -68,7 +68,7 @@ export const HorizontalBarplot = ({ width, height, data }: BarplotProps) => {
           textAnchor="start"
           alignmentBaseline="central"
           fontSize={11}
-          stroke="#D3D3D3"
+          //   stroke="#D3D3D3"
           strokeWidth={1}
         >
           {d.name}

@@ -68,7 +68,7 @@ const Header = ({ setCurrentComponent }) => {
         >
           <h1 style={{ marginBottom: "20px" }}>Information</h1>
           <span style={{ marginBottom: "20px" }}>
-            The visualization about ACM fellows. As start dataset was used{" "}
+            The visualization is about ACM fellows. As start dataset was used{" "}
             <a
               style={{ textDecoration: "underline" }}
               href="https://github.com/lintool/cs-big-cows/blob/master/acm-fellows/acm_fellows.csv"
@@ -79,9 +79,14 @@ const Header = ({ setCurrentComponent }) => {
             fellows, which has a Google Scholar. Data from Google Scholar was
             gathered on 14 October 2023. The social media describes dependency
             between hindex or citations and Twitter followers (data was
-            collected on 16 October 2023). The statistics describes an evolution
-            of number of ACM fellows by country. The last year can be regulated
-            by slider in sidebar.
+            collected on 16 October 2023 and only for the first 200 people in
+            the set, which includes 2020-2022 years). The statistics describes
+            an evolution of the number of ACM fellows by country. The last year
+            can be regulated by the slider in the sidebar.
+          </span>
+          <span style={{ marginBottom: "20px" }}>
+            The main question to take from these visualizations is if we can see
+            trends, correlation, or find insights regarding ACM fellows state.
           </span>
 
           <button

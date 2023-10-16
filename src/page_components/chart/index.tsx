@@ -66,8 +66,8 @@ const Chart: React.FunctionComponent = () => {
           <div className={styles.bubbleChart}>
             {currentComponent === components.statistic && (
               <HorizontalBarplot
-                width={900}
-                height={700}
+                width={1000}
+                height={800}
                 data={(() => {
                   const transformedData = [];
                   const countryCount = getCountryCount(selectedYear);

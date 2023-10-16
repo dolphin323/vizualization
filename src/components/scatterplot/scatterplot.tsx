@@ -3,20 +3,24 @@ import * as d3 from "d3";
 import { ACMFellow } from "@/helpers/getAcmFellowData";
 
 interface IBasicScatterChartProps {
+  height: number;
+  width: number;
   data: { hindex: number; subs: number; person: ACMFellow }[];
   selectedOption: string;
   onClick: () => void;
 }
 
 const BasicScatterChart: React.FC<IBasicScatterChartProps> = ({
+  height,
+  width,
   data,
   selectedOption,
   onClick,
 }: IBasicScatterChartProps) => {
   const svgRef = useRef(null);
   useEffect(() => {
-    const w = 800;
-    const h = 500;
+    const w = width;
+    const h = height;
 
     const svg = d3
       .select(svgRef.current)
@@ -86,7 +90,7 @@ const BasicScatterChart: React.FC<IBasicScatterChartProps> = ({
       .attr("cx", (d) => xScale(d.subs))
       .attr("cy", (d) => yScale(d[selectedOption]))
       .attr("r", 3)
-      .style("stroke", "black")
+      .style("stroke", "white")
       .style("fill", "transparent")
       .on("click", function (event, d) {
         onClick(d.person);
