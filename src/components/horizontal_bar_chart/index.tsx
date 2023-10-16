@@ -44,10 +44,10 @@ export const HorizontalBarplot = ({ width, height, data }: BarplotProps) => {
           y={xScale(d.name)}
           width={yScale(d.value)}
           height={xScale.bandwidth()}
-          opacity={0.7}
-          stroke="#9d174d"
-          fill="#9d178d"
-          fillOpacity={0.3}
+          opacity={0.9}
+          stroke="#d14d79"
+          fill="#d14d79"
+          fillOpacity={0.9}
           strokeWidth={1}
           rx={1}
         />
@@ -57,6 +57,8 @@ export const HorizontalBarplot = ({ width, height, data }: BarplotProps) => {
           textAnchor="end"
           alignmentBaseline="central"
           fontSize={12}
+          stroke="#D3D3D3"
+          strokeWidth={1}
         >
           {d.value}
         </text>
@@ -65,7 +67,9 @@ export const HorizontalBarplot = ({ width, height, data }: BarplotProps) => {
           y={x + xScale.bandwidth() / 2 + 1}
           textAnchor="start"
           alignmentBaseline="central"
-          fontSize={12}
+          fontSize={11}
+          stroke="#D3D3D3"
+          strokeWidth={1}
         >
           {d.name}
         </text>
@@ -107,7 +111,7 @@ export const HorizontalBarplot = ({ width, height, data }: BarplotProps) => {
           y={boundsHeight + 15}
           textAnchor="middle"
           alignmentBaseline="central"
-          fontSize={9}
+          fontSize={12}
           opacity={0.8}
         >
           ACM fellows
