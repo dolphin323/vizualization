@@ -51,7 +51,7 @@ const BarChart: React.FC<BarChartProps> = ({ citation_histogram }) => {
     const tooltip = d3
       .select("body")
       .append("div")
-      .attr("class", "tooltip")
+      .attr("class", "tooltip_bar_chart")
       .style("position", "absolute")
       .style("background", "white")
       .style("padding", "5px")
@@ -71,8 +71,8 @@ const BarChart: React.FC<BarChartProps> = ({ citation_histogram }) => {
       })
       .on("mousemove", function (event, d) {
         return tooltip
-          .style("top", event.pageY + 30 + "px")
-          .style("left", event.pageX + 20 + "px")
+          .style("top", event.pageY + h + "px")
+          .style("left", event.pageX + 10 + "px")
           .html(d[1].toString());
       })
       .on("mouseout", function () {

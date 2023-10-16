@@ -1,55 +1,59 @@
-import React, { useState } from "react";
-import uuid from "react-uuid";
+import React, { Fragment, memo } from "react";
 import { ACMFellow } from "@/helpers/getAcmFellowData";
 
 interface IBubbleState {
-  item: {
-    v: number;
-    x: number;
-    y: number;
-  };
   bubbleData: ACMFellow;
   textFillColor: string;
   selectedCircle: (content: ACMFellow) => void;
   backgroundColor: string;
-  width: number;
-  height: number;
   radius: number;
   selectedOption: keyof Pick<ACMFellow, "hindex" | "citations">;
 }
 
 const Bubble: React.FunctionComponent<IBubbleState> = ({
-  item,
   bubbleData,
   textFillColor,
   selectedCircle,
   backgroundColor,
-  width,
-  height,
   radius,
   selectedOption,
 }) => {
-  const [isShown, setIsShown] = useState(false);
-
   const fontSize = radius / 4;
-  const content = bubbleData.lastName;
   const strokeColor = backgroundColor || "darkgrey";
 
   return (
-    <g
-      key={`g-${uuid()}`}
-      transform={`translate(${1200 / 2 + item.x - 70}, ${height / 2 + item.y})`}
-    >
+    <>
+      {bubbleData.fillColor.length > 7 && (
+        <defs>
+          <pattern
+            id="countryImage"
+            height="100%"
+            width="100%"
+            patternContentUnits="objectBoundingBox"
+          >
+            <image
+              xlinkHref={bubbleData.fillColor}
+              preserveAspectRatio="none"
+              width="1"
+              height="1"
+              opacity={0.7}
+            />
+          </pattern>
+        </defs>
+      )}
       <circle
         style={{ cursor: "pointer" }}
         onClick={() => {
           selectedCircle(bubbleData);
         }}
-        onMouseEnter={() => setIsShown(true)}
-        onMouseLeave={() => setIsShown(false)}
         id="circleSvg"
         r={radius}
-        fill={bubbleData.fillColor}
+        // fill={bubbleData.fillColor}
+        fill={
+          bubbleData.fillColor.length <= 7
+            ? bubbleData.fillColor
+            : "url(#countryImage)"
+        }
         stroke={strokeColor}
         strokeWidth="2"
       />
@@ -73,8 +77,8 @@ const Bubble: React.FunctionComponent<IBubbleState> = ({
           {bubbleData.lastName}
         </tspan>
       </text>
-    </g>
+    </>
   );
 };
 
-export default Bubble;
+export default memo(Bubble);

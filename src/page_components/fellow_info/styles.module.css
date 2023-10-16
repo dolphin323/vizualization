@@ -1,0 +1,51 @@
+.info {
+  margin: 20px 10px 0px 10px;
+  background-color: rgba(93, 167, 195, 0.2);
+  display: flex;
+  padding: 20px;
+  border-radius: 20px;
+  flex: 1;
+}
+
+.info span {
+  color: white;
+}
+
+.left_info {
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.right_info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.right_text_info {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.linkToGS {
+  background-color: rgba(162, 0, 255, 0.5);
+  color: white;
+  padding: 1em 0em;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+.linkToTwit {
+  background-color: rgba(77, 61, 168, 0.5);
+  color: white;
+  padding: 1em 0em;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 10px;
+  border-radius: 10px;
+}

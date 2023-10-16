@@ -1,6 +1,6 @@
 import { parse } from "csv-parse";
 
-import dt from "../data/combined_final_fixed.csv";
+import dt from "../data/merged_sorted_index.csv";
 
 type ACMFellow = {
   index: number;
@@ -22,6 +22,8 @@ type ACMFellow = {
   fillColor: string;
   interests: string;
   imageLink: string;
+  twitterProfile: string;
+  twitterNumberOfFollowers: number;
 };
 
 const generateRandomCode = () => {
@@ -33,53 +35,102 @@ const generateRandomCode = () => {
   return color;
 };
 const countryColors: { [key: string]: string } = {
-  Australia: "#FFBFCE",
-  Austria: "#E6A6C9",
-  Belgium: "#DCBCDF",
-  Brazil: "#BCCDCB",
-  Canada: "#f4bfff",
-  Chile: "#DCCDCF",
+  Australia: "#befcab",
+  Austria: "/flags/austria.png",
+  Belgium: "/flags/belgium.png",
+  Brazil: "/flags/brazil.png",
+  Canada: "#f23c16",
+  Chile: "/flags/chile.png",
   China: "#BFEBDC",
   Denmark: "#FFF8D1",
+  Egypt: "/flags/egypt.png",
   France: "#FFBA63",
   Germany: "#F4E0FF",
   Greece: "#C6B6F0",
   "Hong Kong": "#94D2C9",
-  Hungary: "#CEDAA0",
+  Hungary: "/flags/hungary.png",
   India: "#F0E9C4",
   Israel: "#F8CECA",
   Italy: "#CCD8E9",
   Japan: "#C7EE9F",
-  Malaysia: "#D2D6C3",
-  Mexico: "#FFF3E3",
+  Malaysia: "/flags/malaysia.jpg",
+  Mexico: "/flags/mexico.png",
   Netherlands: "#F7D4D2",
-  "New Zealand": "#D4B4CD",
-  Poland: "#83A14F",
-  "Republic of Korea": "#B54179",
-  "Scotland Uk": "#FFDDFA",
-  Singapore: "#ADA5D6",
+  "New Zealand": "/flags/new_zeland.png",
+  Poland: "/flags/poland.jpg",
+  Portugal: "/flags/portugal.jpg",
+  "Republic of Korea": "/flags/korea.png",
+  "Scotland Uk": "#7fc4a4",
+  Singapore: "/flags/singapore.jpg",
   Spain: "#CAE2E8",
   Sweden: "#FFFEED",
   Switzerland: "#FAE0B7",
   Taiwan: "#DBACAB",
-  USA: "#FFBAC3",
-  "United Kingdom": "#ca9bf7",
+  Turkey: "/flags/turkey.png",
+  USA: "#bfa3e2",
+  "United Kingdom": "#399acc",
 };
 
-const getAcmFellowData = (page: number = 1): ACMFellow[] => {
-  //   console.log(dt.slice(0, 15));
+const countryCountAll = {
+  Australia: 9,
+  Austria: 3,
+  Belgium: 2,
+  Brazil: 1,
+  Canada: 30,
+  Chile: 1,
+  China: 20,
+  Denmark: 6,
+  France: 11,
+  Germany: 26,
+  Greece: 4,
+  "Hong Kong": 6,
+  Hungary: 1,
+  India: 11,
+  Israel: 24,
+  Italy: 13,
+  Japan: 4,
+  Malaysia: 1,
+  Mexico: 1,
+  Netherlands: 4,
+  "New Zealand": 1,
+  Poland: 1,
+  Portugal: 1,
+  "Republic of Korea": 4,
+  "Scotland Uk": 1,
+  Singapore: 2,
+  Spain: 5,
+  Sweden: 6,
+  Switzerland: 18,
+  Taiwan: 7,
+  USA: 720,
+  "United Kingdom": 29,
+};
 
+const getCountryCount = (year: number) => {
+  const countryCount: { [key: string]: number } = {};
   const result = (dt as ACMFellow[])
-    // .slice((page - 1) * 15, page * 15)
+    .filter((data) => data.year <= year)
+    .map((prof) => {
+      if (countryCount[prof.location]) {
+        countryCount[prof.location] += 1;
+      } else {
+        countryCount[prof.location] = 1;
+      }
+    });
+  return countryCount;
+};
+
+const getAcmFellowWithScholarData = (page: number = 1): ACMFellow[] => {
+  const result = (dt as ACMFellow[])
+    .filter((data) => Boolean(data.googleScholarProfile))
     .map((prof) => {
       if (!countryColors[prof.location]) {
         countryColors[prof.location] = generateRandomCode();
       }
-      if (prof.citation_histogram) {
+      if (typeof prof.citation_histogram === "string") {
         const content = (prof.citation_histogram as string).slice(2, -2); // Remove leading "((" and trailing "))" from the string
         const tuples = content.split("), (");
 
-        // Process the tuples and convert them to arrays of numbers
         const resultArray = tuples.map(function (tuple) {
           const values = tuple.split(", ");
           return [
@@ -90,11 +141,22 @@ const getAcmFellowData = (page: number = 1): ACMFellow[] => {
 
         prof.citation_histogram = resultArray;
       }
-
       return { fillColor: countryColors[prof.location], ...prof };
     });
-  console.log(countryColors);
   return result;
 };
 
-export { getAcmFellowData, countryColors, type ACMFellow };
+const getAcmFellowWithTwitterData = (): ACMFellow[] => {
+  const result = (dt as ACMFellow[]).filter((data) =>
+    Boolean(data.twitterProfile)
+  );
+  return result;
+};
+
+export {
+  getAcmFellowWithScholarData,
+  getAcmFellowWithTwitterData,
+  getCountryCount,
+  countryColors,
+  type ACMFellow,
+};

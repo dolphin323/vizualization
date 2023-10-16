@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { SimulationNodeDatum } from "d3-force";
 import Bubble from "../bubble/bubble";
-import { ACMFellow } from "@/helpers/getAcmFellowData";
+import { ACMFellow } from "@/helpers/getAcmFellowWithScholarData";
+import uuid from "react-uuid";
 
 namespace Types {
   export type Data = {
@@ -82,7 +83,7 @@ const BubbleChart: React.FunctionComponent<IBubbleChartProps> = ({
       .nodes(data as SimulationNodeDatum[])
       // .velocityDecay(0.05)
       .force("x", d3.forceX().strength(0.1))
-      .force("y", d3.forceY().strength(0.2))
+      .force("y", d3.forceY().strength(0.3))
       .force("charge", d3.forceManyBody().strength(-15))
       .force(
         "collide",
@@ -104,25 +105,29 @@ const BubbleChart: React.FunctionComponent<IBubbleChartProps> = ({
 
   const renderBubbles = (data: []) => {
     return data.map((item: { v: number; x: number; y: number }, index) => {
-      // console.log("ITEM", item);
       if (bubblesData[index]) {
         return (
-          <Bubble
-            key={bubblesData[index].givenName + bubblesData[index].lastName}
-            item={item}
-            bubbleData={bubblesData[index]}
-            textFillColor={textFillColor}
-            selectedCircle={selectedCircle}
-            backgroundColor={backgroundColor}
-            width={width}
-            height={height}
-            selectedOption={selectedOption}
-            radius={radiusScale(
-              bubblesData[index][selectedOption]
-                ? { size: bubblesData[index][selectedOption] }.size
-                : 1
-            )}
-          />
+          <g
+            key={`g-${uuid()}`}
+            transform={`translate(${1200 / 2 + item.x - 70}, ${
+              height / 2 + item.y
+            })`}
+            xlinkHref="https://static.vecteezy.com/system/resources/previews/006/060/117/large_2x/round-chinese-flag-icon-isolated-on-white-background-the-flag-of-china-in-a-circle-free-vector.jpg"
+          >
+            <Bubble
+              key={bubblesData[index].givenName + bubblesData[index].lastName}
+              bubbleData={bubblesData[index]}
+              textFillColor={textFillColor}
+              selectedCircle={selectedCircle}
+              backgroundColor={backgroundColor}
+              selectedOption={selectedOption}
+              radius={radiusScale(
+                bubblesData[index][selectedOption]
+                  ? { size: bubblesData[index][selectedOption] }.size
+                  : 1
+              )}
+            />
+          </g>
         );
       }
     });
@@ -135,11 +140,19 @@ const BubbleChart: React.FunctionComponent<IBubbleChartProps> = ({
       style={{
         background: backgroundColor,
         cursor: "pointer",
-        width: "100%",
-        overflow: "scroll",
+        minWidth: "1000px",
       }}
     >
-      <svg height={height} style={{ width: "100%" }}>
+      <svg
+        height="100%"
+        width="100%"
+        preserveAspectRatio="xMidYmid"
+        viewBox="0 0 1100 700"
+      >
+        {/* <img
+          src="https://static.vecteezy.com/system/resources/previews/006/060/117/large_2x/round-chinese-flag-icon-isolated-on-white-background-the-flag-of-china-in-a-circle-free-vector.jpg"
+          alt="Background Image"
+        /> */}
         {renderBubbles(state.data as [])}
       </svg>
     </div>

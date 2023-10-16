@@ -1,6 +1,6 @@
 "use client";
+import { Chart } from "@/page_components/chart";
 import styles from "./page.module.css";
-import { Chart } from "@/components/chart/chart";
 
 export default function Home() {
   return (
